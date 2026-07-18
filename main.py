@@ -54,9 +54,27 @@ dicionario_pastas = {
 
 for arquivo in diretorio.iterdir():
     if arquivo.is_file():
+        # Descobrir a categoria
         categoria = dicionario_pastas.get(arquivo.suffix.lower(), 'Outros')
+        
+        # Criar a pasta
         pasta_destino = diretorio / categoria
+        
+        # Definir destino
         destino = pasta_destino / arquivo.name
+        
+        # Verificar se destino já existe
         pasta_destino.mkdir(exist_ok=True, parents=True)
+        
+        # Gerar novo nome se necessário
+        contador = 1
+        
+        while destino.exists():
+            novo_nome = f'{arquivo.stem} ({contador}) {arquivo.suffix}'
+            destino = pasta_destino / novo_nome
+            contador += 1
+            
+        # Mover arquivo
         print(f"Movendo {arquivo.name} para {categoria}")
         shutil.move(arquivo, destino)
+        
