@@ -68,12 +68,18 @@ def confirmar_organizacao():
         confirm = input('Would you like to organize these files now? (Y/N): ')
         
     if confirm.lower() == 'y':
+        print('-' * 10)
+        print('Starting organization')
+        print('-' * 10)
         return True
+
     elif confirm.lower() == 'n':
         return False
 
 # Função Organizar 
 def organizar(diretorio, simulacao):
+    print('-'*10)
+    
     contadores = {}
     arquivos_analisados = 0
     
