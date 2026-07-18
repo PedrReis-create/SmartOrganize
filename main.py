@@ -45,24 +45,25 @@ FOLDER_MAPPING = {
     ".7z": "Archives",
 }
 
+SEPARATOR = "-" * 10
 
 def show_organization_report(category_counter, analyzed_files):
-    print("-" * 10)
+    print(SEPARATOR)
     print("Organization completed successfully!")
 
     for category, amount in category_counter.items():
         print(f"{category}: {amount}")
 
     print(f"Total moved: {analyzed_files}")
-    print("-" * 10)
+    print(SEPARATOR)
 
 
 def show_simulation_report(analyzed_files):
-    print("-" * 10)
+    print(SEPARATOR)
     print("Simulation completed successfully!")
     print("No files were moved.")
     print(f"Total files analyzed: {analyzed_files}")
-    print("-" * 10)
+    print(SEPARATOR)
 
 
 def confirm_organization():
@@ -73,16 +74,22 @@ def confirm_organization():
         confirmation = input("Would you like to organize these files now? (Y/N): ")
 
     if confirmation.lower() == "y":
-        print("-" * 10)
+        print(SEPARATOR)
         print("Starting organization...")
-        print("-" * 10)
+        print(SEPARATOR)
         return True
 
     return False
 
+def increment_counter(category, category_counter):
+    if category in category_counter:
+        category_counter[category] += 1
+    else:
+        category_counter[category] = 1
+
 
 def organize(directory, simulation):
-    print("-" * 10)
+    print(SEPARATOR)
 
     category_counter = {}
     analyzed_files = 0
@@ -121,10 +128,7 @@ def organize(directory, simulation):
 
             analyzed_files += 1
 
-            if category in category_counter:
-                category_counter[category] += 1
-            else:
-                category_counter[category] = 1
+            increment_counter(category, category_counter)
 
     if not simulation:
         show_organization_report(category_counter, analyzed_files)
@@ -137,32 +141,35 @@ def organize(directory, simulation):
 
 
 # MENU
+def main():
+    folder_path = input(
+        "Enter the folder path (e.g. C:/Users/Name/Desktop/Folder): "
+    )
 
-folder_path = input(
-    "Enter the folder path (e.g. C:/Users/Name/Desktop/Folder): "
-)
+    directory = Path(folder_path)
 
-directory = Path(folder_path)
+    print("1 - Organize files")
+    print("2 - Simulation")
 
-print("1 - Organize files")
-print("2 - Simulation")
+    option = input("Choose an option: ")
 
-option = input("Choose an option: ")
+    if not directory.exists():
+        print("The folder does not exist.")
+        print("Restart the program and try again.")
+        exit()
 
-if not directory.exists():
-    print("The folder does not exist.")
-    print("Restart the program and try again.")
-    exit()
+    if option == "1":
+        organize(directory, False)
 
-if option == "1":
-    organize(directory, False)
+    elif option == "2":
+        organize(directory, True)
 
-elif option == "2":
-    organize(directory, True)
-
-else:
-    print("Invalid option.")
-    exit()
+    else:
+        print("Invalid option.")
+        exit()
+        
+if __name__ == "__main__":
+    main()
 
 
 # Variable flow inside organize()
