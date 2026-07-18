@@ -45,11 +45,37 @@ dicionario_pastas = {
     ".7z": "Compactados",
 
 }
+def mostrar_relatorio_organizacao(contadores, arquivos_analisados):
+    print('-' * 10)
+    print('Organization completed successfully!')
+    for chave, valor in contadores.items():
+        print(f'{chave}: {valor}')
+    print(f'Total moved: {arquivos_analisados}')
+    print('-' * 10)
+    
+def mostrar_relatorio_simulacao(arquivos_analisados):
+    print('-' * 10)
+    print('Simulation completed successfully!')
+    print('No files were moved.')
+    print(f'Total files analyzed: {arquivos_analisados}')
+    print('-' * 10)
+
+def confirmar_organizacao():
+    confirm = input('Would you like to organize these files now? (Y/N): ')
+        
+    while confirm.lower() not in ['y', 'n']:
+        print('Invalid answer')
+        confirm = input('Would you like to organize these files now? (Y/N): ')
+        
+    if confirm.lower() == 'y':
+        return True
+    elif confirm.lower() == 'n':
+        return False
 
 # Função Organizar 
-def organizar(diretorio, simulação):
+def organizar(diretorio, simulacao):
     contadores = {}
-    arquivos_movidos = 0
+    arquivos_analisados = 0
     
     for arquivo in diretorio.iterdir():
         if arquivo.is_file():        
@@ -71,7 +97,7 @@ def organizar(diretorio, simulação):
                 contador_nome += 1
                 
             # Mover arquivo
-            if not simulação:
+            if not simulacao:
                 
                 # Verificar se destino já existe
                 pasta_destino.mkdir(exist_ok=True, parents=True)
@@ -85,29 +111,24 @@ def organizar(diretorio, simulação):
                 print(f'Would move {arquivo.name} -> {destino}')
             
             # Incrementa o contador
-            arquivos_movidos += 1
+            arquivos_analisados += 1
             
             if categoria in contadores:
-                    contadores[categoria] += 1
+                contadores[categoria] += 1
             else:
-                    contadores[categoria] = 1
+                contadores[categoria] = 1
                 
-            
-    # Relatório final
-            
-    print('='*10)
-    print('Organization completed successfully!')
-    for chave, valor in contadores.items():
-        print(f'{chave}: {valor}')
-    print(f'Total moved: {arquivos_movidos}')
-    print('='*10)
-            
-
-print('=' * 10)
-print('SmartOrganize')
-print('=' * 10)
-
-
+    if not simulacao:       
+        # Relatório final
+        mostrar_relatorio_organizacao(contadores, arquivos_analisados)
+    else:
+        mostrar_relatorio_simulacao(arquivos_analisados)
+        
+        # Confirmar se quer continuar para a organização
+        if confirmar_organizacao():
+            organizar(diretorio, False)
+        
+        
 # MENU
 caminho = input('Digite o caminho da pasta(ex: C:/Users/nome/Desktop/Nome_pasta): ')
 diretorio = Path(caminho)
