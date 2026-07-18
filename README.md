@@ -93,6 +93,12 @@ Downloads/
 -   [ ] Configuration file
 -   [ ] Unit tests with `pytest`
 
+## Why I built this project
+
+I created this project to improve my Python skills by practicing file manipulation, modular code organization, and modern filesystem handling using `pathlib` and `shutil`.
+
+The goal was to build a simple but reliable command-line application following Clean Code principles.
+
 ## License
 
 Distributed under the MIT License.
