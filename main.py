@@ -1,7 +1,7 @@
 from pathlib import Path
 import shutil 
 
-caminho = input('Digite o caminho da pasta(ex: C:/Users/nome/Downloads): ')
+caminho = input('Digite o caminho da pasta(ex: C:/Users/nome/Desktop/Nome_pasta): ')
 diretorio = Path(caminho)
 if not diretorio.exists():
     print("Essa pasta não existe.")
@@ -52,8 +52,12 @@ dicionario_pastas = {
 
 }
 
+contadores = {}
+
+arquivos_movidos = 0
+
 for arquivo in diretorio.iterdir():
-    if arquivo.is_file():
+    if arquivo.is_file():        
         # Descobrir a categoria
         categoria = dicionario_pastas.get(arquivo.suffix.lower(), 'Outros')
         
@@ -67,14 +71,32 @@ for arquivo in diretorio.iterdir():
         pasta_destino.mkdir(exist_ok=True, parents=True)
         
         # Gerar novo nome se necessário
-        contador = 1
+        contador_nome = 1
         
         while destino.exists():
-            novo_nome = f'{arquivo.stem} ({contador}) {arquivo.suffix}'
+            novo_nome = f'{arquivo.stem} ({contador_nome}){arquivo.suffix}'
             destino = pasta_destino / novo_nome
-            contador += 1
+            contador_nome += 1
             
         # Mover arquivo
         print(f"Movendo {arquivo.name} para {categoria}")
         shutil.move(arquivo, destino)
+        
+        # Incrementa o contador
+        arquivos_movidos += 1
+        
+        if categoria in contadores:
+            contadores[categoria] += 1
+        else:
+            contadores[categoria] = 1
+            
+        
+        # Relatório final
+        print('='*10)
+        print('Organization completed successfully!')
+        for chave, valor in contadores.items():
+            print(f'{chave}: {valor}')
+        print(f'Total moved: {arquivos_movidos}')
+        print('='*10)
+        
         
