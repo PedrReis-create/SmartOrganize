@@ -1,178 +1,184 @@
 from pathlib import Path
-import shutil 
+import shutil
 
-# Para indentificar em qual pasta vai cada arquivo
-dicionario_pastas = {
-    # Imagens
-    ".png": "Imagens",
-    ".jpg": "Imagens",
-    ".jpeg": "Imagens",
-    ".gif": "Imagens",
-    ".bmp": "Imagens",
-    ".webp": "Imagens",
+# File categories
+FOLDER_MAPPING = {
+    # Images
+    ".png": "Images",
+    ".jpg": "Images",
+    ".jpeg": "Images",
+    ".gif": "Images",
+    ".bmp": "Images",
+    ".webp": "Images",
 
-    # Documentos
-    ".pdf": "Documentos",
-    ".doc": "Documentos",
-    ".docx": "Documentos",
-    ".txt": "Documentos",
-    ".md": "Documentos",
-    ".rtf": "Documentos",
+    # Documents
+    ".pdf": "Documents",
+    ".doc": "Documents",
+    ".docx": "Documents",
+    ".txt": "Documents",
+    ".md": "Documents",
+    ".rtf": "Documents",
 
-    # Planilhas
-    ".xls": "Planilhas",
-    ".xlsx": "Planilhas",
-    ".csv": "Planilhas",
+    # Spreadsheets
+    ".xls": "Spreadsheets",
+    ".xlsx": "Spreadsheets",
+    ".csv": "Spreadsheets",
 
-    # Apresentações
-    ".ppt": "Apresentacoes",
-    ".pptx": "Apresentacoes",
+    # Presentations
+    ".ppt": "Presentations",
+    ".pptx": "Presentations",
 
-    # Áudio
-    ".mp3": "Musicas",
-    ".wav": "Musicas",
-    ".flac": "Musicas",
+    # Music
+    ".mp3": "Music",
+    ".wav": "Music",
+    ".flac": "Music",
 
-    # Vídeos
+    # Videos
     ".mp4": "Videos",
     ".mkv": "Videos",
     ".avi": "Videos",
     ".mov": "Videos",
 
-    # Compactados
-    ".zip": "Compactados",
-    ".rar": "Compactados",
-    ".7z": "Compactados",
-
+    # Archives
+    ".zip": "Archives",
+    ".rar": "Archives",
+    ".7z": "Archives",
 }
-def mostrar_relatorio_organizacao(contadores, arquivos_analisados):
-    print('-' * 10)
-    print('Organization completed successfully!')
-    for chave, valor in contadores.items():
-        print(f'{chave}: {valor}')
-    print(f'Total moved: {arquivos_analisados}')
-    print('-' * 10)
-    
-def mostrar_relatorio_simulacao(arquivos_analisados):
-    print('-' * 10)
-    print('Simulation completed successfully!')
-    print('No files were moved.')
-    print(f'Total files analyzed: {arquivos_analisados}')
-    print('-' * 10)
 
-def confirmar_organizacao():
-    confirm = input('Would you like to organize these files now? (Y/N): ')
-        
-    while confirm.lower() not in ['y', 'n']:
-        print('Invalid answer')
-        confirm = input('Would you like to organize these files now? (Y/N): ')
-        
-    if confirm.lower() == 'y':
-        print('-' * 10)
-        print('Starting organization')
-        print('-' * 10)
+
+def show_organization_report(category_counter, analyzed_files):
+    print("-" * 10)
+    print("Organization completed successfully!")
+
+    for category, amount in category_counter.items():
+        print(f"{category}: {amount}")
+
+    print(f"Total moved: {analyzed_files}")
+    print("-" * 10)
+
+
+def show_simulation_report(analyzed_files):
+    print("-" * 10)
+    print("Simulation completed successfully!")
+    print("No files were moved.")
+    print(f"Total files analyzed: {analyzed_files}")
+    print("-" * 10)
+
+
+def confirm_organization():
+    confirmation = input("Would you like to organize these files now? (Y/N): ")
+
+    while confirmation.lower() not in ["y", "n"]:
+        print("Invalid answer.")
+        confirmation = input("Would you like to organize these files now? (Y/N): ")
+
+    if confirmation.lower() == "y":
+        print("-" * 10)
+        print("Starting organization...")
+        print("-" * 10)
         return True
 
-    elif confirm.lower() == 'n':
-        return False
+    return False
 
-# Função Organizar 
-def organizar(diretorio, simulacao):
-    print('-'*10)
-    
-    contadores = {}
-    arquivos_analisados = 0
-    
-    for arquivo in diretorio.iterdir():
-        if arquivo.is_file():        
-            # Descobrir a categoria
-            categoria = dicionario_pastas.get(arquivo.suffix.lower(), 'Outros')
-            
-            # Criar a pasta
-            pasta_destino = diretorio / categoria
-            
-            # Definir destino
-            destino = pasta_destino / arquivo.name
-            
-            # Gerar novo nome se necessário
-            contador_nome = 1
-            
-            while destino.exists():
-                novo_nome = f'{arquivo.stem} ({contador_nome}){arquivo.suffix}'
-                destino = pasta_destino / novo_nome
-                contador_nome += 1
-                
-            # Mover arquivo
-            if not simulacao:
-                
-                # Verificar se destino já existe
-                pasta_destino.mkdir(exist_ok=True, parents=True)
-                
-                print(f"Movendo {arquivo.name} para {destino}")
-                shutil.move(arquivo, destino)
-                
-                
-            
+
+def organize(directory, simulation):
+    print("-" * 10)
+
+    category_counter = {}
+    analyzed_files = 0
+
+    for file in directory.iterdir():
+
+        if file.is_file():
+
+            # Get category
+            category = FOLDER_MAPPING.get(file.suffix.lower(), "Others")
+
+            # Destination folder
+            destination_folder = directory / category
+
+            # Destination file
+            destination = destination_folder / file.name
+
+            # Generate a new name if needed
+            duplicate_counter = 1
+
+            while destination.exists():
+                new_name = f"{file.stem} ({duplicate_counter}){file.suffix}"
+                destination = destination_folder / new_name
+                duplicate_counter += 1
+
+            # Move file
+            if not simulation:
+
+                destination_folder.mkdir(exist_ok=True, parents=True)
+
+                print(f"Moving {file.name} -> {destination}")
+                shutil.move(file, destination)
+
             else:
-                print(f'Would move {arquivo.name} -> {destino}')
-            
-            # Incrementa o contador
-            arquivos_analisados += 1
-            
-            if categoria in contadores:
-                contadores[categoria] += 1
+                print(f"Would move {file.name} -> {destination}")
+
+            analyzed_files += 1
+
+            if category in category_counter:
+                category_counter[category] += 1
             else:
-                contadores[categoria] = 1
-                
-    if not simulacao:       
-        # Relatório final
-        mostrar_relatorio_organizacao(contadores, arquivos_analisados)
+                category_counter[category] = 1
+
+    if not simulation:
+        show_organization_report(category_counter, analyzed_files)
+
     else:
-        mostrar_relatorio_simulacao(arquivos_analisados)
-        
-        # Confirmar se quer continuar para a organização
-        if confirmar_organizacao():
-            organizar(diretorio, False)
-        
-        
+        show_simulation_report(analyzed_files)
+
+        if confirm_organization():
+            organize(directory, False)
+
+
 # MENU
-caminho = input('Digite o caminho da pasta(ex: C:/Users/nome/Desktop/Nome_pasta): ')
-diretorio = Path(caminho)
 
-print('1 - Organize files \n2 - Simulation')
-option = input('Escolha uma opção: ')
+folder_path = input(
+    "Enter the folder path (e.g. C:/Users/Name/Desktop/Folder): "
+)
 
-if not diretorio.exists():
-    print("Essa pasta não existe.")
-    print("Reinicie o programa e tente novamente.")
+directory = Path(folder_path)
+
+print("1 - Organize files")
+print("2 - Simulation")
+
+option = input("Choose an option: ")
+
+if not directory.exists():
+    print("The folder does not exist.")
+    print("Restart the program and try again.")
     exit()
 
-if option == '1':
-    organizar(diretorio, False)
+if option == "1":
+    organize(directory, False)
 
-elif option == '2':
-    # Simulação
-    organizar(diretorio, True)
-    
+elif option == "2":
+    organize(directory, True)
+
 else:
-    print('Opção inválida')
+    print("Invalid option.")
     exit()
-        
-        
-# Comentário para melhor compreensão das váriaveis dentro de organizar()
 
-# diretorio
+
+# Variable flow inside organize()
+#
+# directory
 # │
 # └── C:/Users/User/Downloads
 #       │
-#       ├── categoria
+#       ├── category
 #       │      │
-#       │      └── "Documentos"
+#       │      └── "Documents"
 #       │
-#       ├── pasta_destino
+#       ├── destination_folder
 #       │      │
-#       │      └── C:/Users/User/Downloads/Documentos
+#       │      └── C:/Users/User/Downloads/Documents
 #       │
-#       └── destino
+#       └── destination
 #              │
-#              └── C:/Users/User/Downloads/Documentos/curriculo.pdf
+#              └── C:/Users/User/Downloads/Documents/resume.pdf
