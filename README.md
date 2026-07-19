@@ -1,11 +1,24 @@
-# SmartOrganize
 
-A Python CLI application that automatically organizes files into
-categorized folders based on their extensions. It includes a
-**simulation mode**, prevents overwriting duplicate filenames, and
-creates destination folders automatically.
+
+<h1 align="center">SmartOrganize</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.13-blue">
+  <img src="https://img.shields.io/badge/License-MIT-green">
+  <img src="https://img.shields.io/badge/Status-Completed-brightgreen">
+</p>
+
+A command-line application written in Python that automatically organizes files into categorized folders based on their extensions. The project includes a simulation mode, automatic folder creation, and duplicate filename handling to safely organize directories.
 
 ## Preview
+
+### Demo
+
+![Demo](assets/demo.gif)
+
+### Screenshot
+
+![Screenshot](assets/screenshot.png)
 
 ### Features
 
@@ -17,24 +30,31 @@ creates destination folders automatically.
 -   Safe file moving with `shutil`
 -   Clean and modular codebase
 
+## Simulation Mode
+
+Before moving any file, the application can simulate the organization process and display every planned action. This allows the user to verify the result before confirming the operation.
+
 ## Supported Categories
 
-  Category        Extensions
-  --------------- --------------------------------------------------
-  Images          `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`
-  Documents       `.pdf`, `.doc`, `.docx`, `.txt`, `.md`, `.rtf`
-  Spreadsheets    `.xls`, `.xlsx`, `.csv`
-  Presentations   `.ppt`, `.pptx`
-  Music           `.mp3`, `.wav`, `.flac`
-  Videos          `.mp4`, `.mkv`, `.avi`, `.mov`
-  Archives        `.zip`, `.rar`, `.7z`
-  Others          Any unsupported extension
+- **Images:** `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`
+- **Documents:** `.pdf`, `.doc`, `.docx`, `.txt`, `.md`, `.rtf`
+- **Spreadsheets:** `.xls`, `.xlsx`, `.csv`
+- **Presentations:** `.ppt`, `.pptx`
+- **Music:** `.mp3`, `.wav`, `.flac`
+- **Videos:** `.mp4`, `.mkv`, `.avi`, `.mov`
+- **Archives:** `.zip`, `.rar`, `.7z`
+- **Others:** Any unsupported extension
 
 ## Technologies
 
 -   Python 3
 -   pathlib
 -   shutil
+
+## Requirements
+
+- Python 3.13+
+- Windows, Linux or macOS
 
 ## Project Structure
 
@@ -84,7 +104,7 @@ Downloads/
 └── Others/
 ```
 
-## Roadmap
+## Future Improvements
 
 -   [ ] Command-line arguments with `argparse`
 -   [ ] Recursive folder organization
