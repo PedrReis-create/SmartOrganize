@@ -11,6 +11,11 @@ FOLDER_MAPPING = {
     ".gif": "Images",
     ".bmp": "Images",
     ".webp": "Images",
+    ".svg": "Images",
+    ".ico": "Images",
+    ".tiff": "Images",
+    ".heic": "Images",
+    ".raw": "Images",
 
     # Documents
     ".pdf": "Documents",
@@ -19,31 +24,85 @@ FOLDER_MAPPING = {
     ".txt": "Documents",
     ".md": "Documents",
     ".rtf": "Documents",
+    ".odt": "Documents",
+    ".tex": "Documents",
 
     # Spreadsheets
     ".xls": "Spreadsheets",
     ".xlsx": "Spreadsheets",
     ".csv": "Spreadsheets",
+    ".ods": "Spreadsheets",
 
     # Presentations
     ".ppt": "Presentations",
     ".pptx": "Presentations",
+    ".odp": "Presentations",
 
     # Music
     ".mp3": "Music",
     ".wav": "Music",
     ".flac": "Music",
+    ".aac": "Music",
+    ".ogg": "Music",
+    ".m4a": "Music",
+    ".wma": "Music",
 
     # Videos
     ".mp4": "Videos",
     ".mkv": "Videos",
     ".avi": "Videos",
     ".mov": "Videos",
+    ".wmv": "Videos",
+    ".webm": "Videos",
+    ".flv": "Videos",
+    ".m4v": "Videos",
 
     # Archives
     ".zip": "Archives",
     ".rar": "Archives",
     ".7z": "Archives",
+    ".tar": "Archives",
+    ".gz": "Archives",
+    ".bz2": "Archives",
+    ".xz": "Archives",
+
+    # Executables
+    ".exe": "Programs",
+    ".msi": "Programs",
+    ".apk": "Programs",
+    ".deb": "Programs",
+    ".rpm": "Programs",
+
+    # Code
+    ".py": "Code",
+    ".js": "Code",
+    ".ts": "Code",
+    ".java": "Code",
+    ".cpp": "Code",
+    ".c": "Code",
+    ".cs": "Code",
+    ".go": "Code",
+    ".rs": "Code",
+    ".php": "Code",
+    ".html": "Code",
+    ".css": "Code",
+    ".json": "Code",
+    ".xml": "Code",
+    ".yaml": "Code",
+    ".yml": "Code",
+    ".sql": "Code",
+    ".sh": "Code",
+
+    # Fonts
+    ".ttf": "Fonts",
+    ".otf": "Fonts",
+    ".woff": "Fonts",
+    ".woff2": "Fonts",
+
+    # E-books
+    ".epub": "Books",
+    ".mobi": "Books",
+    ".azw3": "Books",
 }
 
 SEPARATOR = "-" * 10
