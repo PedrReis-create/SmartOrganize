@@ -66,21 +66,23 @@ def show_simulation_report(analyzed_files):
     print(f"Total files analyzed: {analyzed_files}")
     print(SEPARATOR)
 
+def get_yes_no_input(prompt):
+    '''Get a yes/no response from user, with validation.'''
+    while True:
+        response = input(prompt).lower()
+        if response in ['y','n']:
+            return response == 'y'
+        print("Invalid answer. Please enter 'Y' or 'N'.")
 
 def confirm_organization():
-    confirmation = input("Would you like to organize these files now? (Y/N): ")
+    confirmation = get_yes_no_input("Would you like to organize these files now? (Y/N): ")
 
-    while confirmation.lower() not in ["y", "n"]:
-        print("Invalid answer.")
-        confirmation = input("Would you like to organize these files now? (Y/N): ")
-
-    if confirmation.lower() == "y":
+    if confirmation:
         print(SEPARATOR)
         print("Starting organization...")
         print(SEPARATOR)
-        return True
-
-    return False
+    return confirmation
+        
 
 def organize(directory, simulation):
     print(SEPARATOR)
