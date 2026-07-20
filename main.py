@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+from collections import Counter
 
 # File categories
 FOLDER_MAPPING = {
@@ -81,13 +82,6 @@ def confirm_organization():
 
     return False
 
-def increment_counter(category, category_counter):
-    if category in category_counter:
-        category_counter[category] += 1
-    else:
-        category_counter[category] = 1
-
-
 def organize(directory, simulation):
     print(SEPARATOR)
 
@@ -128,7 +122,8 @@ def organize(directory, simulation):
 
             analyzed_files += 1
 
-            increment_counter(category, category_counter)
+            category_counter = Counter()
+            category_counter[category] += 1
 
     if not simulation:
         show_organization_report(category_counter, analyzed_files)
