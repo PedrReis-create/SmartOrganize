@@ -111,11 +111,15 @@ def organize(directory, simulation):
 
             # Move file
             if not simulation:
+                    try:
+                        destination_folder.mkdir(exist_ok=True, parents=True)
 
-                destination_folder.mkdir(exist_ok=True, parents=True)
-
-                print(f"Moving {file.name} -> {destination}")
-                shutil.move(file, destination)
+                        print(f"Moving {file.name} -> {destination}")
+                        shutil.move(file, destination)
+                    except PermissionError:
+                        print(f'Error: permission denied moving {file.name}')
+                    except Exception as e:
+                        print(f'Error moving {file.name}: {e}')
 
             else:
                 print(f"Would move {file.name} -> {destination}")
