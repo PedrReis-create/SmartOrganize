@@ -104,15 +104,6 @@ Downloads/
 └── Others/
 ```
 
-## Future Improvements
-
--   [ ] Command-line arguments with `argparse`
--   [ ] Recursive folder organization
--   [ ] Logging support
--   [ ] Undo last organization
--   [ ] Configuration file
--   [ ] Unit tests with `pytest`
-
 ## Why I built this project
 
 I created this project to improve my Python skills by practicing file manipulation, modular code organization, and modern filesystem handling using `pathlib` and `shutil`.
